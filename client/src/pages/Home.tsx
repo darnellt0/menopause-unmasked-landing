@@ -6,7 +6,13 @@
  */
 
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield, Share2, Twitter, Facebook, Linkedin, Mail, Quote } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield, Share2, Twitter, Facebook, Linkedin, Mail, Quote, CalendarPlus, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -142,6 +148,104 @@ function SocialShare() {
         ))}
       </div>
     </div>
+  );
+}
+
+// Add to Calendar Component
+function AddToCalendar() {
+  const eventTitle = "Meno-Pause Unmasked: Myths, Truths, and Solutions";
+  const eventDescription = "A community conversation designed to bring clarity, language, and support to a season that's too often experienced in silence. Hosted by Elevated Movements × Juicy 2 100.";
+  const eventLocation = "Zoom (link will be sent after registration)";
+  const startDate = "2026-02-14T10:30:00";
+  const endDate = "2026-02-14T12:00:00";
+  const timezone = "America/Los_Angeles";
+
+  // Format dates for different calendar services
+  const formatGoogleDate = (date: string) => date.replace(/[-:]/g, '').replace('T', 'T');
+  const googleStart = formatGoogleDate(startDate);
+  const googleEnd = formatGoogleDate(endDate);
+
+  // Google Calendar URL
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${googleStart}/${googleEnd}&ctz=${timezone}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}`;
+
+  // Outlook Web Calendar URL
+  const outlookCalendarUrl = `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(eventTitle)}&startdt=${startDate}&enddt=${endDate}&body=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}`;
+
+  // Generate ICS file content for Apple Calendar / download
+  const generateICS = () => {
+    const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Elevated Movements//Meno-Pause Unmasked//EN
+BEGIN:VEVENT
+UID:menopause-unmasked-2026@elevatedmovements.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART;TZID=${timezone}:${startDate.replace(/[-:]/g, '')}
+DTEND;TZID=${timezone}:${endDate.replace(/[-:]/g, '')}
+SUMMARY:${eventTitle}
+DESCRIPTION:${eventDescription.replace(/\n/g, '\\n')}
+LOCATION:${eventLocation}
+END:VEVENT
+END:VCALENDAR`;
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'menopause-unmasked.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          className="border-gold text-plum hover:bg-gold/10 font-body font-medium px-4 py-2 rounded-full flex items-center gap-2"
+        >
+          <CalendarPlus className="w-4 h-4" />
+          Add to Calendar
+          <ChevronDown className="w-4 h-4" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="center" className="w-48">
+        <DropdownMenuItem asChild>
+          <a
+            href={googleCalendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.5 3h-3V1.5h-1.5V3h-6V1.5H7.5V3h-3C3.675 3 3 3.675 3 4.5v15c0 .825.675 1.5 1.5 1.5h15c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5zm0 16.5h-15V9h15v10.5zm0-12h-15v-3h15v3z"/>
+            </svg>
+            Google Calendar
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <a
+            href={outlookCalendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M21.5 3h-19C1.675 3 1 3.675 1 4.5v15c0 .825.675 1.5 1.5 1.5h19c.825 0 1.5-.675 1.5-1.5v-15c0-.825-.675-1.5-1.5-1.5zM8 17H4v-4h4v4zm0-6H4V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4zm6 6h-4v-4h4v4zm0-6h-4V7h4v4z"/>
+            </svg>
+            Outlook Calendar
+          </a>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={generateICS}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z"/>
+          </svg>
+          Apple Calendar (.ics)
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -309,9 +413,10 @@ export default function Home() {
               </Button>
             </motion.div>
             
-            {/* Social Share */}
-            <motion.div variants={fadeInUp} className="flex justify-center mb-4">
+            {/* Social Share & Add to Calendar */}
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <SocialShare />
+              <AddToCalendar />
             </motion.div>
             
             {/* Microcopy */}
@@ -737,9 +842,10 @@ export default function Home() {
               </Button>
             </motion.div>
             
-            {/* Social Share */}
-            <motion.div variants={fadeInUp} className="flex justify-center mt-8">
+            {/* Social Share & Add to Calendar */}
+            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
               <SocialShare />
+              <AddToCalendar />
             </motion.div>
             
             <motion.div 
