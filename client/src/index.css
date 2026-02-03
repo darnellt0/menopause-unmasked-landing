@@ -44,67 +44,71 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
   
-  /* Custom brand colors */
-  --color-plum: oklch(0.38 0.08 320);
-  --color-plum-light: oklch(0.45 0.08 320);
-  --color-lavender: oklch(0.92 0.02 290);
-  --color-lavender-dark: oklch(0.85 0.03 290);
+  /* Blended Brand Colors - Elevated Movements + Juicy 2 100 */
+  /* Elevated Movements: #36013f (deep plum), #37475e (slate), #176161 (teal), #e0cd67 (gold), #c3b4b3 (lavender) */
+  /* Juicy 2 100: #2114F (deep purple), #DAB653 (gold), #4F585A (slate) */
+  
+  --color-plum: oklch(0.25 0.12 320);           /* #36013f - Elevated deep plum */
+  --color-plum-light: oklch(0.35 0.12 320);
+  --color-purple-deep: oklch(0.20 0.18 290);    /* #2114F - Juicy deep purple */
+  --color-lavender: oklch(0.78 0.02 20);        /* #c3b4b3 */
+  --color-lavender-light: oklch(0.92 0.01 20);
   --color-cream: oklch(0.98 0.01 85);
-  --color-gold: oklch(0.72 0.12 85);
-  --color-gold-light: oklch(0.82 0.08 85);
-  --color-slate: oklch(0.35 0.02 250);
-  --color-slate-light: oklch(0.50 0.02 250);
-  --color-teal: oklch(0.45 0.10 195);
-  --color-teal-light: oklch(0.55 0.10 195);
+  --color-gold: oklch(0.82 0.12 90);            /* Blend of #e0cd67 and #DAB653 */
+  --color-gold-dark: oklch(0.75 0.14 90);
+  --color-slate: oklch(0.38 0.02 240);          /* Blend of #37475e and #4F585A */
+  --color-slate-light: oklch(0.50 0.02 240);
+  --color-teal: oklch(0.42 0.08 180);           /* #176161 */
+  --color-teal-light: oklch(0.52 0.08 180);
 }
 
 :root {
   --radius: 0.75rem;
   
-  /* Soft Editorial Sanctuary Theme */
+  /* Joint Venture Theme - Elevated Movements × Juicy 2 100 */
   --background: oklch(0.98 0.008 85);
-  --foreground: oklch(0.30 0.02 250);
+  --foreground: oklch(0.25 0.02 250);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.30 0.02 250);
+  --card-foreground: oklch(0.25 0.02 250);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.30 0.02 250);
+  --popover-foreground: oklch(0.25 0.02 250);
   
-  /* Primary: Deep Plum */
-  --primary: oklch(0.38 0.08 320);
+  /* Primary: Deep Plum (Elevated) */
+  --primary: oklch(0.25 0.12 320);
   --primary-foreground: oklch(0.98 0.01 85);
   
-  /* Secondary: Soft Lavender */
-  --secondary: oklch(0.92 0.02 290);
-  --secondary-foreground: oklch(0.35 0.02 250);
+  /* Secondary: Lavender */
+  --secondary: oklch(0.92 0.01 20);
+  --secondary-foreground: oklch(0.25 0.02 250);
   
   /* Muted */
-  --muted: oklch(0.95 0.01 290);
-  --muted-foreground: oklch(0.50 0.02 250);
+  --muted: oklch(0.95 0.01 20);
+  --muted-foreground: oklch(0.50 0.02 240);
   
   /* Accent: Teal for CTAs */
-  --accent: oklch(0.45 0.10 195);
+  --accent: oklch(0.42 0.08 180);
   --accent-foreground: oklch(0.98 0.01 85);
   
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(0.88 0.02 290);
-  --input: oklch(0.92 0.02 290);
-  --ring: oklch(0.45 0.10 195);
+  --border: oklch(0.88 0.02 20);
+  --input: oklch(0.92 0.01 20);
+  --ring: oklch(0.42 0.08 180);
   
-  --chart-1: oklch(0.38 0.08 320);
-  --chart-2: oklch(0.45 0.10 195);
-  --chart-3: oklch(0.72 0.12 85);
-  --chart-4: oklch(0.92 0.02 290);
-  --chart-5: oklch(0.50 0.02 250);
+  --chart-1: oklch(0.25 0.12 320);
+  --chart-2: oklch(0.42 0.08 180);
+  --chart-3: oklch(0.82 0.12 90);
+  --chart-4: oklch(0.78 0.02 20);
+  --chart-5: oklch(0.50 0.02 240);
   
   --sidebar: oklch(0.98 0.008 85);
-  --sidebar-foreground: oklch(0.30 0.02 250);
-  --sidebar-primary: oklch(0.38 0.08 320);
+  --sidebar-foreground: oklch(0.25 0.02 250);
+  --sidebar-primary: oklch(0.25 0.12 320);
   --sidebar-primary-foreground: oklch(0.98 0.01 85);
-  --sidebar-accent: oklch(0.92 0.02 290);
-  --sidebar-accent-foreground: oklch(0.35 0.02 250);
-  --sidebar-border: oklch(0.88 0.02 290);
-  --sidebar-ring: oklch(0.45 0.10 195);
+  --sidebar-accent: oklch(0.92 0.01 20);
+  --sidebar-accent-foreground: oklch(0.25 0.02 250);
+  --sidebar-border: oklch(0.88 0.02 20);
+  --sidebar-ring: oklch(0.42 0.08 180);
 }
 
 @layer base {
@@ -167,7 +171,7 @@
   
   /* Gold divider line */
   .gold-divider {
-    height: 1px;
+    height: 2px;
     background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
     max-width: 200px;
     margin: 0 auto;
@@ -207,6 +211,38 @@
   .animation-delay-300 { animation-delay: 300ms; }
   .animation-delay-400 { animation-delay: 400ms; }
   .animation-delay-500 { animation-delay: 500ms; }
+  
+  /* Countdown timer styles */
+  .countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 70px;
+  }
+  
+  .countdown-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+  
+  .countdown-label {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+  
+  @media (min-width: 768px) {
+    .countdown-number {
+      font-size: 3.5rem;
+    }
+    .countdown-unit {
+      min-width: 90px;
+    }
+  }
 }
 
 @layer utilities {
@@ -222,6 +258,9 @@
   .text-plum-light {
     color: var(--color-plum-light);
   }
+  .text-purple-deep {
+    color: var(--color-purple-deep);
+  }
   .text-slate {
     color: var(--color-slate);
   }
@@ -230,6 +269,9 @@
   }
   .text-gold {
     color: var(--color-gold);
+  }
+  .text-gold-dark {
+    color: var(--color-gold-dark);
   }
   .text-teal {
     color: var(--color-teal);
@@ -240,11 +282,14 @@
   .bg-lavender {
     background-color: var(--color-lavender);
   }
-  .bg-lavender-dark {
-    background-color: var(--color-lavender-dark);
+  .bg-lavender-light {
+    background-color: var(--color-lavender-light);
   }
   .bg-plum {
     background-color: var(--color-plum);
+  }
+  .bg-purple-deep {
+    background-color: var(--color-purple-deep);
   }
   .bg-teal {
     background-color: var(--color-teal);

@@ -1,14 +1,14 @@
 /**
  * menoPause Unmasked Landing Page
- * Design: Soft Editorial Sanctuary
- * - Playfair Display for headlines, Source Sans Pro for body
- * - Warm cream background, deep plum headlines, teal CTAs, gold accents
- * - Generous whitespace, organic shapes, editorial feel
+ * Design: Joint Venture - Elevated Movements × Juicy 2 100
+ * Blended brand colors: Deep plum, gold, teal, lavender
+ * Features: Countdown timer, social sharing, testimonials
  */
 
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield, Share2, Twitter, Facebook, Linkedin, Mail, Quote } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 
 // CDN URLs for uploaded assets
 const ASSETS = {
@@ -21,6 +21,7 @@ const ASSETS = {
 };
 
 const REGISTRATION_URL = "https://www.elevatedmovements.com/registration";
+const EVENT_DATE = new Date("2026-02-14T10:30:00-08:00"); // February 14, 2026 10:30 AM PT
 
 // Animation variants
 const fadeInUp = {
@@ -36,17 +37,152 @@ const staggerContainer = {
   }
 };
 
+// Countdown Timer Hook
+function useCountdown(targetDate: Date) {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = targetDate.getTime() - new Date().getTime();
+      
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60)
+        });
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  return timeLeft;
+}
+
+// Countdown Timer Component
+function CountdownTimer() {
+  const timeLeft = useCountdown(EVENT_DATE);
+
+  return (
+    <div className="flex justify-center gap-4 md:gap-6">
+      {[
+        { value: timeLeft.days, label: "Days" },
+        { value: timeLeft.hours, label: "Hours" },
+        { value: timeLeft.minutes, label: "Minutes" },
+        { value: timeLeft.seconds, label: "Seconds" }
+      ].map((item, index) => (
+        <div key={index} className="countdown-unit bg-white/80 backdrop-blur-sm rounded-xl p-3 md:p-4 shadow-sm">
+          <span className="countdown-number text-plum">{String(item.value).padStart(2, '0')}</span>
+          <span className="countdown-label text-slate-light">{item.label}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Social Share Component
+function SocialShare() {
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+  const shareText = "Join me for Meno-Pause Unmasked: Myths, Truths, and Solutions - A community conversation on February 14, 2026";
+
+  const shareLinks = [
+    {
+      name: "Twitter",
+      icon: Twitter,
+      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
+      color: "hover:bg-[#1DA1F2] hover:text-white"
+    },
+    {
+      name: "Facebook",
+      icon: Facebook,
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
+      color: "hover:bg-[#4267B2] hover:text-white"
+    },
+    {
+      name: "LinkedIn",
+      icon: Linkedin,
+      url: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent("Meno-Pause Unmasked")}`,
+      color: "hover:bg-[#0077B5] hover:text-white"
+    },
+    {
+      name: "Email",
+      icon: Mail,
+      url: `mailto:?subject=${encodeURIComponent("Join me for Meno-Pause Unmasked")}&body=${encodeURIComponent(shareText + "\n\n" + shareUrl)}`,
+      color: "hover:bg-teal hover:text-white"
+    }
+  ];
+
+  return (
+    <div className="flex items-center gap-3">
+      <span className="font-body text-sm text-slate-light flex items-center gap-2">
+        <Share2 className="w-4 h-4" /> Share:
+      </span>
+      <div className="flex gap-2">
+        {shareLinks.map((link) => (
+          <a
+            key={link.name}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`w-9 h-9 rounded-full bg-lavender-light flex items-center justify-center text-slate transition-all ${link.color}`}
+            aria-label={`Share on ${link.name}`}
+          >
+            <link.icon className="w-4 h-4" />
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Testimonials Data
+const testimonials = [
+  {
+    quote: "Elevated Movements creates spaces where I can finally exhale. The conversations are real, the community is supportive, and I always leave feeling seen.",
+    author: "Community Member",
+    event: "Previous Elevated Movements Event"
+  },
+  {
+    quote: "I didn't know how much I needed this until I was in the room. The way Shria holds space is unlike anything I've experienced.",
+    author: "Workshop Participant",
+    event: "Elevated Movements Workshop"
+  },
+  {
+    quote: "Finally, a space where we can talk about what we're really going through without judgment. This is the community I've been searching for.",
+    author: "Event Attendee",
+    event: "Community Conversation"
+  }
+];
+
 export default function Home() {
   return (
     <div className="min-h-screen bg-cream">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-cream/95 backdrop-blur-sm border-b border-lavender">
         <div className="container flex items-center justify-between h-16 md:h-20">
-          <img 
-            src={ASSETS.elevatedLogo} 
-            alt="Elevated Movements" 
-            className="h-10 md:h-12 w-auto"
-          />
+          <div className="flex items-center gap-3">
+            <img 
+              src={ASSETS.elevatedLogo} 
+              alt="Elevated Movements" 
+              className="h-10 md:h-12 w-auto"
+            />
+            <span className="text-gold-dark text-xl font-display">×</span>
+            <img 
+              src={ASSETS.juicyLogo} 
+              alt="Juicy 2 100" 
+              className="h-10 md:h-12 w-auto"
+            />
+          </div>
           <Button 
             asChild
             className="bg-teal hover:bg-teal-light text-white font-body font-semibold px-6"
@@ -62,24 +198,34 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center pt-20">
         {/* Background Image */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-40"
+          className="absolute inset-0 bg-cover bg-center opacity-30"
           style={{ backgroundImage: `url(${ASSETS.heroBackground})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-cream/60 via-cream/40 to-cream" />
         
         <div className="container relative z-10">
           <motion.div 
-            className="max-w-3xl mx-auto text-center py-16 md:py-24"
+            className="max-w-3xl mx-auto text-center py-12 md:py-20"
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
           >
+            {/* Joint Venture Badge */}
+            <motion.div 
+              variants={fadeInUp}
+              className="flex items-center justify-center gap-3 mb-6"
+            >
+              <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" />
+              <span className="text-gold-dark text-lg font-display">×</span>
+              <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" />
+            </motion.div>
+            
             {/* Eyebrow */}
             <motion.p 
               variants={fadeInUp}
-              className="text-gold font-body font-semibold tracking-widest uppercase text-sm mb-6"
+              className="text-gold-dark font-body font-semibold tracking-widest uppercase text-sm mb-4"
             >
-              Elevated Movements × Juicy 2 100 presents
+              A Joint Presentation
             </motion.p>
             
             {/* Main Title */}
@@ -94,7 +240,7 @@ export default function Home() {
             {/* Subtitle */}
             <motion.p 
               variants={fadeInUp}
-              className="font-display text-2xl md:text-3xl text-slate italic mb-8"
+              className="font-display text-2xl md:text-3xl text-slate italic mb-6"
             >
               Myths, Truths, and Solutions
             </motion.p>
@@ -102,32 +248,38 @@ export default function Home() {
             {/* Support Line */}
             <motion.p 
               variants={fadeInUp}
-              className="font-body text-lg md:text-xl text-slate-light max-w-2xl mx-auto mb-10 leading-relaxed"
+              className="font-body text-lg md:text-xl text-slate-light max-w-2xl mx-auto mb-8 leading-relaxed"
             >
               A community conversation designed to bring clarity, language, and support 
               to a season that's too often experienced in silence.
             </motion.p>
             
+            {/* Countdown Timer */}
+            <motion.div variants={fadeInUp} className="mb-8">
+              <p className="font-body text-sm text-slate-light uppercase tracking-wider mb-4">Event starts in:</p>
+              <CountdownTimer />
+            </motion.div>
+            
             {/* Event Details */}
             <motion.div 
               variants={fadeInUp}
-              className="flex flex-wrap justify-center gap-4 md:gap-6 mb-10 text-slate"
+              className="flex flex-wrap justify-center gap-3 md:gap-4 mb-8 text-slate"
             >
-              <div className="flex items-center gap-2 bg-lavender/50 px-4 py-2 rounded-full">
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
                 <MapPin className="w-4 h-4 text-teal" />
-                <span className="font-body">Virtual</span>
+                <span className="font-body text-sm">Virtual</span>
               </div>
-              <div className="flex items-center gap-2 bg-lavender/50 px-4 py-2 rounded-full">
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
                 <Calendar className="w-4 h-4 text-teal" />
-                <span className="font-body">February 14, 2026</span>
+                <span className="font-body text-sm">February 14, 2026</span>
               </div>
-              <div className="flex items-center gap-2 bg-lavender/50 px-4 py-2 rounded-full">
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
                 <Clock className="w-4 h-4 text-teal" />
-                <span className="font-body">10:30 AM – 12:00 PM PT</span>
+                <span className="font-body text-sm">10:30 AM – 12:00 PM PT</span>
               </div>
-              <div className="flex items-center gap-2 bg-lavender/50 px-4 py-2 rounded-full">
+              <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
                 <Users className="w-4 h-4 text-teal" />
-                <span className="font-body">Zoom</span>
+                <span className="font-body text-sm">Zoom</span>
               </div>
             </motion.div>
             
@@ -157,12 +309,17 @@ export default function Home() {
               </Button>
             </motion.div>
             
+            {/* Social Share */}
+            <motion.div variants={fadeInUp} className="flex justify-center mb-4">
+              <SocialShare />
+            </motion.div>
+            
             {/* Microcopy */}
             <motion.p 
               variants={fadeInUp}
               className="font-body text-sm text-slate-light"
             >
-              Registration required. You'll receive a confirmation email with the Zoom link.
+              Free • Registration required • You'll receive a confirmation email with the Zoom link
             </motion.p>
           </motion.div>
         </div>
@@ -204,7 +361,7 @@ export default function Home() {
       <div className="gold-divider" />
 
       {/* Who It's For Section */}
-      <section className="section-padding bg-lavender/30">
+      <section className="section-padding bg-lavender-light">
         <div className="container">
           <motion.div 
             className="max-w-4xl mx-auto"
@@ -231,7 +388,7 @@ export default function Home() {
                 <motion.div 
                   key={index}
                   variants={fadeInUp}
-                  className="flex items-start gap-4 bg-white/80 p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
+                  className="flex items-start gap-4 bg-white p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow"
                 >
                   <div className="flex-shrink-0 w-8 h-8 bg-teal/10 rounded-full flex items-center justify-center">
                     <Check className="w-5 h-5 text-teal" />
@@ -295,8 +452,53 @@ export default function Home() {
       {/* Gold Divider */}
       <div className="gold-divider" />
 
+      {/* Testimonials Section */}
+      <section className="section-padding bg-plum text-white">
+        <div className="container">
+          <motion.div 
+            className="max-w-5xl mx-auto"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={staggerContainer}
+          >
+            <motion.h2 
+              variants={fadeInUp}
+              className="font-display text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-center"
+            >
+              What Our Community Says
+            </motion.h2>
+            <motion.p 
+              variants={fadeInUp}
+              className="font-body text-white/70 text-center mb-12 text-lg"
+            >
+              Voices from past Elevated Movements experiences
+            </motion.p>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {testimonials.map((testimonial, index) => (
+                <motion.div 
+                  key={index}
+                  variants={fadeInUp}
+                  className="bg-white/10 backdrop-blur-sm p-8 rounded-2xl border border-white/20 relative"
+                >
+                  <Quote className="w-10 h-10 text-gold/50 absolute top-6 right-6" />
+                  <p className="font-body text-white/90 mb-6 leading-relaxed italic">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="border-t border-white/20 pt-4">
+                    <p className="font-display text-gold font-semibold">{testimonial.author}</p>
+                    <p className="font-body text-white/60 text-sm">{testimonial.event}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Featured Hosts Section */}
-      <section className="section-padding bg-lavender/30">
+      <section className="section-padding bg-lavender-light">
         <div className="container">
           <motion.div 
             className="max-w-5xl mx-auto"
@@ -309,7 +511,7 @@ export default function Home() {
               variants={fadeInUp}
               className="font-display text-plum text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 text-center"
             >
-              Featured Hosts
+              Your Hosts
             </motion.h2>
             <motion.p 
               variants={fadeInUp}
@@ -358,7 +560,7 @@ export default function Home() {
                 </div>
                 <div className="p-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <img src={ASSETS.juicyLogo} alt="Juicy 2 100 Nation" className="h-10 w-auto" />
+                    <img src={ASSETS.juicyLogo} alt="Juicy 2 100 Nation" className="h-12 w-auto" />
                   </div>
                   <h3 className="font-display text-plum text-2xl font-semibold mb-2">Asara Tsehai</h3>
                   <p className="font-body text-teal font-medium mb-4">Featured Guest • Juicy 2 100</p>
@@ -393,7 +595,7 @@ export default function Home() {
             {/* Timeline */}
             <div className="relative">
               {/* Vertical Line */}
-              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gold/30 transform md:-translate-x-1/2" />
+              <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-gold via-gold to-gold/30 transform md:-translate-x-1/2" />
               
               {[
                 { title: "Welcome & Community Agreements", desc: "A welcoming opening to set the tone for our time together" },
@@ -415,7 +617,7 @@ export default function Home() {
                   </div>
                   
                   {/* Timeline Node */}
-                  <div className="absolute left-4 md:left-1/2 w-3 h-3 bg-gold rounded-full transform -translate-x-1/2 mt-8 ring-4 ring-cream" />
+                  <div className="absolute left-4 md:left-1/2 w-4 h-4 bg-gold rounded-full transform -translate-x-1/2 mt-7 ring-4 ring-cream shadow-md" />
                   
                   <div className="flex-1 hidden md:block" />
                 </motion.div>
@@ -424,7 +626,7 @@ export default function Home() {
             
             <motion.p 
               variants={fadeInUp}
-              className="font-body text-slate-light text-center mt-8 bg-lavender/30 p-4 rounded-xl"
+              className="font-body text-slate-light text-center mt-8 bg-white p-4 rounded-xl shadow-sm"
             >
               <strong>Accessibility:</strong> If you need captions or accommodations, you can note this on the registration form.
             </motion.p>
@@ -433,7 +635,7 @@ export default function Home() {
       </section>
 
       {/* Community Agreements */}
-      <section className="section-padding bg-plum text-white">
+      <section className="section-padding bg-gradient-to-br from-plum to-purple-deep text-white">
         <div className="container">
           <motion.div 
             className="max-w-4xl mx-auto"
@@ -461,7 +663,7 @@ export default function Home() {
                   variants={fadeInUp}
                   className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/20"
                 >
-                  <h3 className="font-display text-xl font-semibold mb-2 text-gold-light">{item.title}</h3>
+                  <h3 className="font-display text-xl font-semibold mb-2 text-gold">{item.title}</h3>
                   <p className="font-body text-white/80">{item.desc}</p>
                 </motion.div>
               ))}
@@ -471,7 +673,7 @@ export default function Home() {
       </section>
 
       {/* Important Note */}
-      <section className="py-12 bg-lavender/30">
+      <section className="py-12 bg-lavender-light">
         <div className="container">
           <motion.div 
             className="max-w-3xl mx-auto text-center"
@@ -492,7 +694,7 @@ export default function Home() {
       <section className="section-padding bg-cream relative overflow-hidden">
         {/* Background decoration */}
         <div 
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-15"
           style={{ backgroundImage: `url(${ASSETS.communityImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-cream via-cream/95 to-cream/80" />
@@ -513,10 +715,15 @@ export default function Home() {
             </motion.h2>
             <motion.p 
               variants={fadeInUp}
-              className="font-body text-slate text-lg md:text-xl mb-10"
+              className="font-body text-slate text-lg md:text-xl mb-8"
             >
               Reserve your seat and bring a friend who needs this conversation.
             </motion.p>
+            
+            {/* Mini Countdown */}
+            <motion.div variants={fadeInUp} className="mb-8">
+              <CountdownTimer />
+            </motion.div>
             
             <motion.div variants={fadeInUp}>
               <Button 
@@ -530,9 +737,14 @@ export default function Home() {
               </Button>
             </motion.div>
             
+            {/* Social Share */}
+            <motion.div variants={fadeInUp} className="flex justify-center mt-8">
+              <SocialShare />
+            </motion.div>
+            
             <motion.div 
               variants={fadeInUp}
-              className="flex flex-wrap justify-center gap-4 mt-8 text-slate-light font-body"
+              className="flex flex-wrap justify-center gap-4 mt-6 text-slate-light font-body"
             >
               <span>Free</span>
               <span>•</span>
@@ -547,15 +759,19 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-plum text-white py-12">
+      <footer className="bg-gradient-to-br from-plum to-purple-deep text-white py-12">
         <div className="container">
           <div className="max-w-4xl mx-auto">
-            {/* Logos */}
-            <div className="flex flex-wrap justify-center items-center gap-8 mb-8">
+            {/* Joint Venture Logos */}
+            <div className="flex flex-wrap justify-center items-center gap-6 mb-8">
               <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-12 w-auto brightness-0 invert" />
-              <span className="text-gold text-2xl">×</span>
+              <span className="text-gold text-2xl font-display">×</span>
               <img src={ASSETS.juicyLogo} alt="Juicy 2 100 Nation" className="h-16 w-auto" />
             </div>
+            
+            <p className="font-body text-white/70 text-center mb-8 max-w-lg mx-auto">
+              A joint presentation bringing together two communities committed to supporting women through every season of life.
+            </p>
             
             {/* Links */}
             <div className="flex flex-wrap justify-center gap-6 mb-8 font-body text-sm">
@@ -568,7 +784,7 @@ export default function Home() {
             </div>
             
             {/* Copyright */}
-            <p className="font-body text-sm text-white/60 text-center">
+            <p className="font-body text-sm text-white/50 text-center">
               © 2026 Elevated Movements × Juicy 2 100. All rights reserved.
             </p>
           </div>
