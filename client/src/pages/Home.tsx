@@ -650,6 +650,7 @@ export default function Home() {
                     src={ASSETS.shriaPhoto} 
                     alt="Shria Tomlinson" 
                     className="w-full h-full object-cover object-top"
+                    style={{transform: 'scale(0.85)', transformOrigin: 'center top'}}
                   />
                 </div>
                 <div className="p-8">
@@ -675,6 +676,7 @@ export default function Home() {
                     src={ASSETS.asaraPhoto} 
                     alt="Asara Tsehai" 
                     className="w-full h-full object-cover object-top"
+                    style={{filter: 'contrast(1.05) brightness(1.02) saturate(1.05)'}}
                   />
                 </div>
                 <div className="p-8">
@@ -682,7 +684,7 @@ export default function Home() {
                     <img src={ASSETS.juicyLogo} alt="Juicy 2 100 Nation" className="h-12 w-auto" />
                   </div>
                   <h3 className="font-display text-plum text-2xl font-semibold mb-2">Asara Tsehai</h3>
-                  <p className="font-body text-teal font-medium mb-4">Featured Guest • Juicy 2 100</p>
+                  <p className="font-body text-teal font-medium mb-4">Featured Guest • Juicy to 100</p>
                   <p className="font-body text-slate leading-relaxed">
                     Asara brings a grounded approach to women's health education—helping women 
                     move from fear to facts and feel supported in what they're navigating.
