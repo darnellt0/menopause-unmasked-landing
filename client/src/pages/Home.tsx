@@ -6,7 +6,8 @@
  */
 
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield, Share2, Twitter, Facebook, Linkedin, Mail, Quote, CalendarPlus, ChevronDown } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, ArrowRight, Check, Heart, MessageCircle, Sparkles, Shield, Share2, Twitter, Facebook, Linkedin, Mail, Quote, CalendarPlus, ChevronDown, UserPlus } from "lucide-react";
+import { WaitlistModal } from "@/components/WaitlistModal";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -269,6 +270,8 @@ const testimonials = [
 ];
 
 export default function Home() {
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  
   return (
     <div className="min-h-screen bg-cream">
       {/* Navigation */}
@@ -412,6 +415,15 @@ export default function Home() {
                 <a href="#what-to-expect">
                   What to Expect ↓
                 </a>
+              </Button>
+              <Button 
+                onClick={() => setWaitlistOpen(true)}
+                variant="outline"
+                size="lg"
+                className="border-gold-dark text-gold-dark hover:bg-gold-dark hover:text-white font-body font-semibold px-8 py-6 text-lg rounded-full transition-all"
+              >
+                <UserPlus className="mr-2 w-5 h-5" />
+                Join Waitlist
               </Button>
             </motion.div>
             
@@ -897,6 +909,9 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      
+      {/* Waitlist Modal */}
+      <WaitlistModal open={waitlistOpen} onOpenChange={setWaitlistOpen} />
     </div>
   );
 }
