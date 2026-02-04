@@ -283,11 +283,11 @@ export default function Home() {
               alt="Elevated Movements" 
               className="h-10 md:h-12 w-auto"
             />
-            <span className="text-gold-dark text-xl font-display">×</span>
+            <span className="text-gold-dark text-xl font-display">&</span>
             <img 
               src={ASSETS.juicyLogo} 
               alt="Juicy 2 100" 
-              className="h-10 md:h-12 w-auto"
+              className="h-10 md:h-12 w-auto" style={{height: '86px'}}
             />
           </div>
           <Button 
@@ -325,7 +325,7 @@ export default function Home() {
               style={{height: '169px'}}
             >
               <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" style={{height: '123px'}} />
-              <span className="text-gold-dark text-lg font-display" style={{width: '24px', height: '32px', paddingLeft: '11px', fontSize: '27px'}}>×</span>
+              <span className="text-gold-dark text-lg font-display" style={{width: '24px', height: '32px', paddingLeft: '11px', fontSize: '27px'}}>&</span>
               <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" style={{height: '271px'}} />
             </motion.div>
             
