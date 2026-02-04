@@ -313,15 +313,17 @@ export default function Home() {
             initial="hidden"
             animate="visible"
             variants={staggerContainer}
+            style={{paddingTop: '14px'}}
           >
             {/* Joint Venture Badge */}
             <motion.div 
               variants={fadeInUp}
               className="flex items-center justify-center gap-3 mb-6"
+              style={{height: '169px'}}
             >
-              <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" />
-              <span className="text-gold-dark text-lg font-display">×</span>
-              <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" />
+              <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" style={{height: '72px'}} />
+              <span className="text-gold-dark text-lg font-display" style={{width: '24px', height: '32px', paddingLeft: '11px', fontSize: '27px'}}>×</span>
+              <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" style={{height: '175px'}} />
             </motion.div>
             
             {/* Eyebrow */}
@@ -530,12 +532,11 @@ export default function Home() {
               What you'll walk away with
             </motion.h2>
             
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { icon: Sparkles, title: "Clarity", desc: "On common myths vs. what's actually true" },
                 { icon: Shield, title: "Confidence", desc: "To advocate for yourself (questions to bring to your provider)" },
-                { icon: MessageCircle, title: "Language", desc: "For symptoms, shifts, and needs" },
-                { icon: Heart, title: "Connection", desc: "With women navigating this transition too" }
+                { icon: MessageCircle, title: "Language", desc: "For symptoms, shifts, and needs" }
               ].map((item, index) => (
                 <motion.div 
                   key={index}
