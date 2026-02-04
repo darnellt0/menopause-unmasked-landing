@@ -324,9 +324,9 @@ export default function Home() {
               className="flex items-center justify-center gap-3 mb-6"
               style={{height: '169px'}}
             >
-              <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" style={{height: '72px'}} />
+              <img src={ASSETS.elevatedLogo} alt="Elevated Movements" className="h-8 w-auto" style={{height: '123px'}} />
               <span className="text-gold-dark text-lg font-display" style={{width: '24px', height: '32px', paddingLeft: '11px', fontSize: '27px'}}>×</span>
-              <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" style={{height: '175px'}} />
+              <img src={ASSETS.juicyLogo} alt="Juicy 2 100" className="h-10 w-auto" style={{height: '271px'}} />
             </motion.div>
             
             {/* Eyebrow */}
