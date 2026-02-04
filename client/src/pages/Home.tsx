@@ -281,13 +281,13 @@ export default function Home() {
             <img 
               src={ASSETS.elevatedLogo} 
               alt="Elevated Movements" 
-              className="h-10 md:h-12 w-auto"
+              className="h-10 md:h-12 w-auto" style={{height: '57px'}}
             />
-            <span className="text-gold-dark text-xl font-display">&</span>
+            <span className="text-gold-dark text-xl font-display" style={{display: 'none'}}>&</span>
             <img 
               src={ASSETS.juicyLogo} 
               alt="Juicy 2 100" 
-              className="h-10 md:h-12 w-auto" style={{height: '86px'}}
+              className="h-10 md:h-12 w-auto" style={{height: '92px', display: 'none'}}
             />
           </div>
           <Button 
@@ -357,7 +357,7 @@ export default function Home() {
             {/* Support Line */}
             <motion.p 
               variants={fadeInUp}
-              className="font-body text-lg md:text-xl text-slate-light max-w-2xl mx-auto mb-8 leading-relaxed"
+              className="font-body text-lg md:text-xl text-slate-light max-w-2xl mx-auto mb-8 leading-relaxed" style={{fontSize: '22px'}}
             >
               A community conversation designed to bring clarity, language, and support 
               to a season that's too often experienced in silence.
@@ -438,7 +438,7 @@ export default function Home() {
               variants={fadeInUp}
               className="font-body text-sm text-slate-light"
             >
-              Free • Registration required • You'll receive a confirmation email with the Zoom link
+              Complementary • Registration required • You'll receive a confirmation email with the Zoom link
             </motion.p>
           </motion.div>
         </div>
@@ -502,7 +502,8 @@ export default function Home() {
                 "You're wondering whether what you're feeling is perimenopause or menopause",
                 "You want facts without fear or shame",
                 "You want language for what you're experiencing",
-                "You're ready for community—without having to explain yourself"
+                "You're ready for community—without having to explain yourself",
+                "You're seeking practical tools and resources for this transition"
               ].map((item, index) => (
                 <motion.div 
                   key={index}
