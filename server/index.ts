@@ -54,27 +54,28 @@ async function startServer() {
       }
 
       // Forward registration data to n8n webhook
-      // Send both camelCase and snake_case to match n8n/Google Sheets expectations
+      // Nest under "body" to match n8n Normalize Data node which checks $json.body.*
+      // Include agree_guidelines for the If node condition
       const webhookPayload = {
-        // snake_case for Google Sheets columns
-        first_name: firstName,
-        last_name: lastName,
+        body: {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          phone,
+          age_range: ageRange,
+          agree_guidelines: true,
+          timestamp_utc: new Date().toISOString(),
+          event_slug: "menopause-unmasked-2026",
+          symptoms: (symptoms || []).join(", "),
+          hopes: (hopes || []).join(", "),
+          referral_source: referralSource || "",
+          referral_other: referralOther || "",
+          additional_notes: additionalNotes || "",
+          source: "landing-page",
+        },
+        // Also send top-level for If node access
         email,
-        phone,
-        age_range: ageRange,
-        timestamp_utc: new Date().toISOString(),
-        event_slug: "menopause-unmasked-2026",
-        // Also send as camelCase for n8n flexibility
-        firstName,
-        lastName,
-        ageRange,
-        symptoms: symptoms || [],
-        hopes: hopes || [],
-        referralSource: referralSource || "",
-        referralOther: referralOther || "",
-        additionalNotes: additionalNotes || "",
-        registeredAt: new Date().toISOString(),
-        source: "landing-page",
+        agree_guidelines: true,
       };
 
       console.log(`[Register] Sending registration for ${email} to n8n webhook...`);
