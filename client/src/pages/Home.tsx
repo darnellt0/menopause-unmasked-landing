@@ -27,7 +27,7 @@ const ASSETS = {
   communityImage: "https://private-us-east-1.manuscdn.com/sessionFile/TjFxtf1M3fwSTYypLEbba2/sandbox/1HLL51K8scVkWcgEpN4KKP-img-2_1770160419000_na1fn_Y29tbXVuaXR5LWdhdGhlcmluZw.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvVGpGeHRmMU0zZndTVFl5cExFYmJhMi9zYW5kYm94LzFITEw1MUs4c2NWa1djZ0VwTjRLS1AtaW1nLTJfMTc3MDE2MDQxOTAwMF9uYTFmbl9ZMjl0YlhWdWFYUjVMV2RoZEdobGNtbHVady5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=pN1fWZGiRM5YyS8X73JIWhNS0pfmD9xzUQB7qjjvUjtgUE7g0FFtxh12CHqi6k740CFMeuWZmvKLtAw8-s2j5qTcCEN9OmEU4VBYUN6parMpsjBxRYvIetXCCPs1jP23bI0sxmekG293d7PR-gXB-lPCFiBukKuDsefWK~OtK8nx2~e1aG8U~ypKM31CpMoaDUoq8PmuIygjddyZ6VxmVwXFxx~3htR~~8hQkmda1ENlTsNOpNb~XhWhxZa8WaJVZVoUvK00MuiO~2pTZZtpdN7HbxTxDGTf~~qtFTAGXz~DUBBlccojYIuqE1JneskAT67S5Wiwde8izwIfXReppg__",
 };
 
-const REGISTRATION_URL = "https://www.elevatedmovements.com/registration";
+const REGISTRATION_URL = "/register";
 const EVENT_DATE = new Date("2026-02-14T10:30:00-08:00"); // February 14, 2026 10:30 AM PT
 
 // Animation variants
@@ -290,11 +290,11 @@ export default function Home() {
               className="h-10 md:h-12 w-auto" style={{height: '92px', display: 'none'}}
             />
           </div>
-          <Button 
+          <Button
             asChild
             className="bg-teal hover:bg-teal-light text-white font-body font-semibold px-6"
           >
-            <a href={REGISTRATION_URL} target="_blank" rel="noopener noreferrer">
+            <a href={REGISTRATION_URL}>
               Register Now
             </a>
           </Button>
@@ -397,12 +397,12 @@ export default function Home() {
               variants={fadeInUp}
               className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6"
             >
-              <Button 
+              <Button
                 asChild
                 size="lg"
                 className="bg-teal hover:bg-teal-light text-white font-body font-semibold px-8 py-6 text-lg rounded-full shadow-lg hover:shadow-xl transition-all"
               >
-                <a href={REGISTRATION_URL} target="_blank" rel="noopener noreferrer">
+                <a href={REGISTRATION_URL}>
                   Register Now <ArrowRight className="ml-2 w-5 h-5" />
                 </a>
               </Button>
@@ -847,12 +847,12 @@ export default function Home() {
             </motion.div>
             
             <motion.div variants={fadeInUp}>
-              <Button 
+              <Button
                 asChild
                 size="lg"
                 className="bg-teal hover:bg-teal-light text-white font-body font-semibold px-10 py-7 text-xl rounded-full shadow-xl hover:shadow-2xl transition-all"
               >
-                <a href={REGISTRATION_URL} target="_blank" rel="noopener noreferrer">
+                <a href={REGISTRATION_URL}>
                   Register Now <ArrowRight className="ml-2 w-6 h-6" />
                 </a>
               </Button>
@@ -900,7 +900,7 @@ export default function Home() {
               <a href="mailto:hello@elevatedmovements.com" className="hover:text-gold transition-colors">
                 Contact
               </a>
-              <a href={REGISTRATION_URL} target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">
+              <a href={REGISTRATION_URL} className="hover:text-gold transition-colors">
                 Register
               </a>
             </div>
