@@ -54,11 +54,19 @@ async function startServer() {
       }
 
       // Forward registration data to n8n webhook
+      // Send both camelCase and snake_case to match n8n/Google Sheets expectations
       const webhookPayload = {
-        firstName,
-        lastName,
+        // snake_case for Google Sheets columns
+        first_name: firstName,
+        last_name: lastName,
         email,
         phone,
+        age_range: ageRange,
+        timestamp_utc: new Date().toISOString(),
+        event_slug: "menopause-unmasked-2026",
+        // Also send as camelCase for n8n flexibility
+        firstName,
+        lastName,
         ageRange,
         symptoms: symptoms || [],
         hopes: hopes || [],
