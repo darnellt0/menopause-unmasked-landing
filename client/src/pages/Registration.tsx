@@ -57,6 +57,8 @@ export default function Registration() {
   const getMetadata = () => {
     const params = new URLSearchParams(window.location.search);
     return {
+      event_slug: 'menopause-unmasked',
+      timestamp_utc: new Date().toISOString(),
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
       utm_campaign: params.get('utm_campaign') || '',
@@ -159,6 +161,7 @@ export default function Registration() {
         experiences: formData.experiences.join(', '),
         hopes: formData.hopes.join(', '),
         ...metadata,
+        status: 'registered',
       };
 
       // Convert to URL-encoded format
