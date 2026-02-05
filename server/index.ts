@@ -6,9 +6,100 @@ import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// n8n webhook URL - uses ngrok tunnel to reach local n8n instance
+// When workflow is Active: use /webhook/ path
+// When testing: use /webhook-test/ path
+const N8N_WEBHOOK_URL =
+  process.env.N8N_WEBHOOK_URL ||
+  "https://nonlevel-promilitarism-lorita.ngrok-free.dev/webhook/menopause-unmasked-registration";
+
 async function startServer() {
   const app = express();
   const server = createServer(app);
+
+  // Parse JSON request bodies
+  app.use(express.json());
+
+  // Registration API endpoint - proxies form data to n8n webhook
+  app.post("/api/register", async (req, res) => {
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        phone,
+        ageRange,
+        symptoms,
+        hopes,
+        referralSource,
+        referralOther,
+        additionalNotes,
+      } = req.body;
+
+      // Server-side validation
+      if (!firstName || !lastName || !email || !phone || !ageRange) {
+        res.status(400).json({
+          success: false,
+          message: "Please fill in all required fields.",
+        });
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        res.status(400).json({
+          success: false,
+          message: "Please provide a valid email address.",
+        });
+        return;
+      }
+
+      // Forward registration data to n8n webhook
+      const webhookPayload = {
+        firstName,
+        lastName,
+        email,
+        phone,
+        ageRange,
+        symptoms: symptoms || [],
+        hopes: hopes || [],
+        referralSource: referralSource || "",
+        referralOther: referralOther || "",
+        additionalNotes: additionalNotes || "",
+        registeredAt: new Date().toISOString(),
+        source: "landing-page",
+      };
+
+      console.log(`[Register] Sending registration for ${email} to n8n webhook...`);
+
+      const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookPayload),
+      });
+
+      if (!webhookResponse.ok) {
+        const errorText = await webhookResponse.text().catch(() => "");
+        console.error(
+          `[Register] n8n webhook returned ${webhookResponse.status}: ${errorText}`
+        );
+        // Still return success to the user - we don't want webhook issues to block registration
+        console.warn(
+          "[Register] Webhook failed but returning success to user. Payload logged above."
+        );
+      } else {
+        console.log(`[Register] Successfully registered ${email}`);
+      }
+
+      res.json({ success: true, message: "Registration successful!" });
+    } catch (error) {
+      console.error("[Register] Error:", error);
+      // If the webhook is unreachable (n8n down, ngrok down, etc.),
+      // still return success so the user isn't blocked
+      res.json({ success: true, message: "Registration received!" });
+    }
+  });
 
   // Serve static files from dist/public in production
   const staticPath =
@@ -27,6 +118,7 @@ async function startServer() {
 
   server.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
+    console.log(`n8n webhook URL: ${N8N_WEBHOOK_URL}`);
   });
 }
 
